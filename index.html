@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#120824">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Happy Birthday Mimi · Amila</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300;1,9..144,600&family=DM+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+</head>
+<body class="locked">
+
+<!-- ======== AMBIENT LAYERS ======== -->
+<div id="stage" aria-hidden="true">
+  <video id="va" muted playsinline preload="auto"></video>
+  <video id="vb" muted playsinline preload="auto"></video>
+</div>
+<div id="tint" aria-hidden="true"></div>
+<div id="glow" aria-hidden="true"></div>
+<div id="bar-top" aria-hidden="true"></div>
+<div id="grain" aria-hidden="true"></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<!-- ======== 1. GATE — TWO-STEP CONFIRMATION ======== -->
+<div id="gate">
+  <div class="orb" style="--m:-30;width:300px;height:300px;background:var(--royal);left:-80px;top:8%"></div>
+  <div class="orb" style="--m:40;width:260px;height:260px;background:var(--gold);right:-90px;bottom:10%;opacity:.28"></div>
+
+  <!-- STEP 1 -->
+  <div class="ask on" data-step="1">
+    <h1>Are you <b>Mimi</b>?</h1>
+    <p>This space was made for one specific person.</p>
+    <div class="btnrow">
+      <button class="btn-yes" data-go="2">Yes, that's me</button>
+      <button class="btn-no"  data-go="3">No…</button>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="ask" data-step="2">
+    <h1>Wait — are you <b>sure</b>?</h1>
+    <p>There will be cake. Loud music. Terrible jokes from your big bro.<br>No refunds.</p>
+    <div class="btnrow">
+      <button class="btn-yes" data-go="open">Yes, absolutely</button>
+      <button class="btn-no"  data-go="1">Actually, no</button>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="ask" data-step="3">
+    <h1>Hmm… <b>nice try</b>.</h1>
+    <p>Only Mimi can enter this space. 😏</p>
+    <div class="btnrow">
+      <button class="btn-yes" data-go="1">Let me try again</button>
+    </div>
+  </div>
+</div>
+
+<!-- ======== 2. SPLASH (clip1) ======== -->
+<div id="splash" aria-hidden="true">
+  <video id="intro" muted playsinline preload="auto" src="clips/clip1.mp4"></video>
+  <div class="lb t"></div>
+  <div class="lb b"></div>
+  <button id="skip" type="button">Skip</button>
+</div>
+
+<!-- ======== 3. VIDEO COLLAGE GRID ======== -->
+<div id="collage" aria-hidden="true">
+  <!-- 6 tiles injected by JS -->
+</div>
+
+<!-- ======== 4. BRIDGE TITLE ======== -->
+<h1 id="collageTitle" aria-hidden="true">Happy B-Day Lil bro!!!</h1>
+
+<!-- ======== 5. GLASS CARD ======== -->
+<div id="card" role="dialog" aria-labelledby="cardTitle">
+  <h2 id="cardTitle">Happy Birthday<br><span class="glowtxt">Mimi!!!! Amila!!!</span></h2>
+  <p class="subtitle">Site just for Mimi's space.</p>
+  <button id="beginBtn" type="button">
+    <span class="dot"></span> Let's go →
+  </button>
+</div>
+
+<!-- ======== 6. MAIN PAGE ======== -->
+<main id="page">
+
+  <section class="hero">
+    <h1 id="heroTitle" aria-label="Happy Birthday Mimi Amila"></h1>
+    <div class="date">8 October 2026 &nbsp;·&nbsp; Fourteen today</div>
+    <div class="cue" aria-hidden="true"></div>
+  </section>
+
+  <section>
+    <div class="ring rv" id="ring">
+      <svg viewBox="0 0 200 200" aria-hidden="true">
+        <defs>
+          <linearGradient id="gg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#e9c27a"/>
+            <stop offset=".5" stop-color="#c8963e"/>
+            <stop offset="1" stop-color="#f7ecd2"/>
+          </linearGradient>
+        </defs>
+        <circle class="bg" cx="100" cy="100" r="90"/>
+        <circle class="fg" cx="100" cy="100" r="90"/>
+      </svg>
+      <b>14</b>
+    </div>
+    <p class="sub rv">Officially fourteen.<br>Still causing chaos.</p>
+  </section>
+
+  <section class="sec-rail">
+    <h2 class="rv">Moments</h2>
+    <p class="hint rv">Swipe the reel →</p>
+    <div class="rail" id="rail"></div>
+  </section>
+
+  <section>
+    <h2 class="rv">Make a wish</h2>
+    <svg class="cake rv" id="cake" viewBox="0 0 150 190" role="button" tabindex="0"
+         aria-label="Tap the flame to blow out the candle">
+      <g class="smoke"><path d="M75 44c-8-8 8-14 0-24" stroke="#f7ecd2" stroke-width="3" fill="none" stroke-linecap="round"/></g>
+      <g class="fl">
+        <path d="M75 12c14 16 14 28 0 34-14-6-14-18 0-34z" fill="#e9c27a"/>
+        <path d="M75 26c7 8 7 14 0 17-7-3-7-9 0-17z" fill="#f7ecd2"/>
+      </g>
+      <rect x="71" y="46" width="8" height="38" rx="3" fill="#f7ecd2"/>
+      <rect x="18" y="84" width="114" height="42" rx="10" fill="#8c5a22"/>
+      <path d="M18 100q14 14 28 0t28 0 28 0 28 0v-6a10 10 0 0 0-10-10H28a10 10 0 0 0-10 10z" fill="#f7ecd2"/>
+      <rect x="6" y="126" width="138" height="52" rx="12" fill="#4b2488"/>
+      <path d="M6 144q17 14 34 0t34 0 34 0 36 0v-6a12 12 0 0 0-12-12H18a12 12 0 0 0-12 12z" fill="#b79cf0"/>
+    </svg>
+    <p id="wishtxt" class="rv">Tap the flame. Close your eyes first.</p>
+  </section>
+
+  <section>
+    <div class="paper rv" id="paper">
+      <h3>Happy Birthday Amila!</h3>
+      <p>Beautiful message from your big bro… your big broskie, I love you man!</p>
+      <p>Fourteen already. Not long ago you were the little guy trailing behind me, and now you're a teenager with your own opinions and your own style. I'm proud of you.</p>
+      <p>Whatever you decide to be, I've got your back. Any problem, any dream, any random 2am idea — call your big bro first.</p>
+      <p>Enjoy today. You earned it. Eat too much cake. Blast the playlist — it's all yours.</p>
+      <div class="sign">
+        <div class="seal">O</div>
+        From Oza
+      </div>
+    </div>
+  </section>
+
+  <footer>Made with love, just for Mimi's space.</footer>
+</main>
+
+<!-- ======== PLAYLIST PANEL ======== -->
+<div id="list" aria-hidden="true">
+  <div class="lhead"><span>Mimi's Playlist</span><span id="lcount"></span></div>
+  <ol id="tracks"></ol>
+</div>
+
+<!-- ======== PLAYER ======== -->
+<div id="player">
+  <div id="seek" role="slider" aria-label="Seek" tabindex="0">
+    <div id="track"><div id="fill"></div></div>
+  </div>
+  <div class="prow">
+    <button class="disc" id="disc" type="button" aria-label="Open playlist"></button>
+    <div class="mid">
+      <div class="t"><span id="song">—</span><small id="artist"></small></div>
+      <div class="brow">
+        <div class="eq" id="eq" aria-hidden="true"></div>
+        <div id="time"><span id="cur">0:00</span><span id="dur">0:00</span></div>
+      </div>
+    </div>
+    <div class="ctrls">
+      <button id="prev" type="button" aria-label="Previous track">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2.2v14H6zM20 5v14L9.4 12z"/></svg>
+      </button>
+      <button id="pp" type="button" aria-label="Play or pause">
+        <svg class="ic-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        <svg class="ic-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+      </button>
+      <button id="next" type="button" aria-label="Next track">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 5h2v14h-2zM4 5v14l10.6-7z"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<audio id="music" preload="auto"></audio>
+
+<script src="js/script.js" defer></script>
+</body>
+</html>
